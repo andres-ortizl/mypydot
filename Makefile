@@ -29,14 +29,14 @@ run-it:
 
 PHONY: run-it
 run-tests:
-	@docker run  -it \
+	@docker run  -t \
 		--name=$(PROJECT_NAME) \
 		-v ${LOCAL_ETL_DIR}:/opt/etls/$(PROJECT_NAME) \
 		--rm $(DOCKER_IMAGE):$(DOCKER_TAG) poetry run pytest
 
 PHONY: run-it
 run-lint:
-	@docker run  -it \
+	@docker run  -t \
 		--name=$(PROJECT_NAME) \
 		-v ${LOCAL_ETL_DIR}:/opt/etls/$(PROJECT_NAME) \
 		--rm $(DOCKER_IMAGE):$(DOCKER_TAG) poetry run flake8
