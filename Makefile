@@ -15,16 +15,14 @@ build:
 PHONY: run
 run:
 	@docker run  \
-		--name=$(PROJECT_NAME)\
-		--env-file ${ENV_FILE}\
+		--name=$(PROJECT_NAME) \
 		-v ${LOCAL_ETL_DIR}:/opt/etls/$(PROJECT_NAME) \
 		--rm $(DOCKER_IMAGE):$(DOCKER_TAG)
 
 PHONY: run-it
 run-it:
 	@docker run  -it \
-		--name=$(PROJECT_NAME)\
-		--env-file ${ENV_FILE}\
+		--name=$(PROJECT_NAME) \
 		-v ${LOCAL_ETL_DIR}:/opt/etls/$(PROJECT_NAME) \
 		--rm $(DOCKER_IMAGE):$(DOCKER_TAG) bash
 
@@ -32,15 +30,13 @@ run-it:
 PHONY: run-it
 run-tests:
 	@docker run  -it \
-		--name=$(PROJECT_NAME)\
-		--env-file ${ENV_FILE}\
+		--name=$(PROJECT_NAME) \
 		-v ${LOCAL_ETL_DIR}:/opt/etls/$(PROJECT_NAME) \
 		--rm $(DOCKER_IMAGE):$(DOCKER_TAG) poetry run pytest
 
 PHONY: run-it
 run-lint:
 	@docker run  -it \
-		--name=$(PROJECT_NAME)\
-		--env-file ${ENV_FILE}\
+		--name=$(PROJECT_NAME) \
 		-v ${LOCAL_ETL_DIR}:/opt/etls/$(PROJECT_NAME) \
 		--rm $(DOCKER_IMAGE):$(DOCKER_TAG) poetry run flake8
