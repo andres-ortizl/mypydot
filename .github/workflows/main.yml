@@ -12,9 +12,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Lint
-        run: make run-lint
       - name: Build image
         run: make build
+
+      - name: Code Lint
+        run: make run-lint
+
+      - name: Dockerfile Lint
+        uses: hadolint/hadolint-action@v1.6.0
+        with:
+          dockerfile: Dockerfile
+
       - name: Run tests
         run: make run-tests
