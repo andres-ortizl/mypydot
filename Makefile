@@ -27,15 +27,15 @@ run-it:
 		--rm $(DOCKER_IMAGE):$(DOCKER_TAG) bash
 
 
-PHONY: run-it
-run-tests:
+PHONY: run-tests
+run-tests: build
 	@docker run  -t \
 		--name=$(PROJECT_NAME) \
 		-v ${LOCAL_ETL_DIR}:/opt/etls/$(PROJECT_NAME) \
 		--rm $(DOCKER_IMAGE):$(DOCKER_TAG) poetry run pytest
 
-PHONY: run-it
-run-lint:
+PHONY: run-lint
+run-lint : build
 	@docker run  -t \
 		--name=$(PROJECT_NAME) \
 		-v ${LOCAL_ETL_DIR}:/opt/etls/$(PROJECT_NAME) \
