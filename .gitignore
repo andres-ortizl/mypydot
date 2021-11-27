@@ -1,0 +1,7 @@
+.idea
+.env
+.envrc
+tmp
+example_files
+mypydotfiles
+.pytest_cache
