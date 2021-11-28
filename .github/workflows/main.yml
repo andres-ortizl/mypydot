@@ -24,7 +24,7 @@ jobs:
           dockerfile: Dockerfile
 
       - name: Run tests
-      uses: sonarsource/sonarcloud-github-action@master
+        uses: sonarsource/sonarcloud-github-action@master
         run: make run-tests
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
