@@ -29,10 +29,11 @@ run-it:
 
 PHONY: run-tests
 run-tests: build
-	@docker run  -t \
+	@docker run  \
 		--name=$(PROJECT_NAME) \
 		-v ${LOCAL_ETL_DIR}:/opt/etls/$(PROJECT_NAME) \
-		--rm $(DOCKER_IMAGE):$(DOCKER_TAG) poetry run pytest
+		--rm $(DOCKER_IMAGE):$(DOCKER_TAG) poetry run pytest --cov="mypydot" -v tests/ --cov-report=xml
+
 
 PHONY: run-lint
 run-lint : build

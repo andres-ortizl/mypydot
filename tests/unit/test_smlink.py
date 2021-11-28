@@ -12,7 +12,7 @@ class TestSmLink:
         with open(input_file_route, 'w') as f:
             f.write(rand_id)
 
-        sm_link_file_route = '/tmp/test_create_smlink.txt'
+        sm_link_file_route = path.join(os.getcwd(), 'test_create_smlink.txt')
         SmLink.create_sym_link(input_file_route, sm_link_file_route)
         with open(sm_link_file_route, 'r') as f:
             file_content = f.read()
