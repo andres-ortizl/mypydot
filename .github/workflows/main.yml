@@ -35,7 +35,7 @@ jobs:
             && poetry install $(test "$YOUR_ENV" == production && echo "--no-dev") --no-interaction --no-ansi
       - name: Run Tests
         run: |
-          export PYTHONPATH=/home/runner/work/mypydot/mypydot/src
+          export PYTHONPATH=/home/runner/work/mypydot/mypydot/src/
           poetry run pytest --cov="mypydot" -v tests/ --cov-report=xml
 
       - name: SonarCloud Scan
