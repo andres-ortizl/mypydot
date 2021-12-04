@@ -40,13 +40,11 @@ jobs:
         id: cache
         with:
           path: ~/.virtualenvs
-          key: poetry-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: |
-            poetry-${{ hashFiles('**/poetry.lock') }}
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('.github/workflows/main.yml') }}
 
       - name: Set Poetry config
         run: |
-          poetry config virtualenvs.create true
+          poetry config virtualenvs.create false
           poetry config virtualenvs.path ~/.virtualenvs
 
       - name: Install Dependencies
