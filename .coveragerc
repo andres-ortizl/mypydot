@@ -1,7 +1,6 @@
 # .coveragerc to control coverage.py
 [run]
 branch = True
-source = mypydot
 # omit = bad_file.py
 
 [paths]
