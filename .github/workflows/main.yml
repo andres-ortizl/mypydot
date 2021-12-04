@@ -12,9 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build image
-        run: make build
-
       - name: Code Lint
         run: make run-lint
 
@@ -34,7 +31,10 @@ jobs:
           poetry config virtualenvs.create false \
             && poetry install $(test "$YOUR_ENV" == production && echo "--no-dev") --no-interaction --no-ansi
       - name: Run Tests
-        run: PYTHONPATH=/home/runner/work/mypydot/mypydot/src poetry run pytest --cov="mypydot" -v tests/ --cov-report=xml
+
+        run: |
+          export PYTHONPATH=$PYTHONPATH:/home/runner/work/mypydot/mypydot/src
+          PYTHONPATH= poetry run pytest --cov="mypydot" -v tests/ --cov-report=xml
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
