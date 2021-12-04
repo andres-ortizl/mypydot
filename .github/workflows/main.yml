@@ -35,13 +35,26 @@ jobs:
         with:
           poetry-version: 1.1.11
 
-      - name: Install dependencies
+      - name: Cache Poetry virtualenv
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: ~/.virtualenvs
+          key: poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            poetry-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Set Poetry config
         run: |
-          poetry config virtualenvs.create false \
-            && poetry install $(test "$YOUR_ENV" == production && echo "--no-dev") --no-interaction --no-ansi
+          poetry config virtualenvs.create false
+
+      - name: Install Dependencies
+        run: poetry install
+        if: steps.cache.outputs.cache-hit != 'true'
+
       - name: Run Tests
         run: |
-          poetry run pytest --cov="mypydot" -v tests/ --cov-report=xml 
+          PYTHONPATH=mypydot/ poetry run pytest --cov --cov-report=xml 
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
