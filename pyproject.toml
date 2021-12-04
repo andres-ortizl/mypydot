@@ -2,7 +2,7 @@
 name = "mypydot"
 version = "0.1.0"
 description = ""
-authors = ["andrs.ortizl@gmail.com"]
+authors = ["John Smith <john@example.com>"]
 
 
 [tool.poetry.dependencies]
