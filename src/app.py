@@ -59,7 +59,7 @@ class App:
         """
         logging.info(f'copying template to {self._dot_files_dir}')
         # TODO: Use relative path to library
-        copytree('/Users/andrew/Code/mypydot/template', self._dot_files_dir)
+        copytree('/template', self._dot_files_dir)
 
     def sync(self) -> None:
         """

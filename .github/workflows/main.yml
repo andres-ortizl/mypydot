@@ -1,9 +1,14 @@
 name: CI
 
 on:
-  pull_request:
   push:
-
+    branches:
+      - master
+      - develop
+  pull_request:
+    branches:
+      - main
+      - dev
 jobs:
   ci:
     name: ci-pipeline
@@ -36,8 +41,7 @@ jobs:
             && poetry install $(test "$YOUR_ENV" == production && echo "--no-dev") --no-interaction --no-ansi
       - name: Run Tests
         run: |
-          export PYTHONPATH=$PYTHONPATH:/home/runner/work/mypydot/mypydot/src
-          poetry run pytest --cov="mypydot" -v tests/ --cov-report=xml
+          poetry run pytest --cov="src" -v tests/ --cov-report=xml 
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
