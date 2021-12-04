@@ -41,7 +41,7 @@ jobs:
             && poetry install $(test "$YOUR_ENV" == production && echo "--no-dev") --no-interaction --no-ansi
       - name: Run Tests
         run: |
-          poetry run pytest --cov="src" -v tests/ --cov-report=xml 
+          poetry run pytest --cov="mypydot" -v tests/ --cov-report=xml 
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
