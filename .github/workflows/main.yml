@@ -29,7 +29,7 @@ jobs:
           python-version: 3.9
       - name: Install dependencies
         env:
-          PYTHONPATH: mypydot/src
+          PYTHONPATH: /home/runner/work/mypydot/mypydot/src
         run: |
           python -m pip install --upgrade pip
           pip install --no-cache-dir --upgrade "poetry==1.1.11"
