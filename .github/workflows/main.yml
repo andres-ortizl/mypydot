@@ -8,6 +8,7 @@ jobs:
   ci:
     name: ci-pipeline
     runs-on: ubuntu-latest
+    container: python:3.9-slim
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -20,18 +21,16 @@ jobs:
         with:
           dockerfile: Dockerfile
 
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
       - name: Install dependencies
         run: |
+          apt-get update && apt-get install -y --no-install-recommends \
+          && apt-get clean \
+          && rm -rf /var/lib/apt/lists/* \
           python -m pip install --upgrade pip
           pip install --no-cache-dir --upgrade "poetry==1.1.11"
           poetry config virtualenvs.create false \
             && poetry install $(test "$YOUR_ENV" == production && echo "--no-dev") --no-interaction --no-ansi
       - name: Run Tests
-
         run: |
           export PYTHONPATH=$PYTHONPATH:/home/runner/work/mypydot/mypydot/src
           PYTHONPATH= poetry run pytest --cov="mypydot" -v tests/ --cov-report=xml
