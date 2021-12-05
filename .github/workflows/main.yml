@@ -17,6 +17,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+
       - name: Code Lint
         uses: py-actions/flake8@v1
 
@@ -24,11 +29,6 @@ jobs:
         uses: hadolint/hadolint-action@v1.6.0
         with:
           dockerfile: Dockerfile
-
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.9"
 
       - name: Install poetry
         uses: abatilo/actions-poetry@v2.0.0
