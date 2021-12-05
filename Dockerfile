@@ -18,6 +18,6 @@ COPY pyproject.toml "${BASE_ROUTE}"
 
 # hadolint ignore=SC2046
 RUN poetry config virtualenvs.create false \
-  && poetry install $(test "$YOUR_ENV" == production && echo "--no-dev") --no-interaction --no-ansi
+  && poetry install --no-interaction --no-ansi
 
 COPY . ${BASE_ROUTE}
