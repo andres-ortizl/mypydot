@@ -5,7 +5,6 @@ LABEL maintainer="andrs.ortizl@gmail.com" \
       stack="python"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    nano \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && pip install --no-cache-dir --upgrade "poetry==1.1.11"
