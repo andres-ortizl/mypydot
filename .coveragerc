@@ -6,7 +6,6 @@ source = mypydot
 
 [paths]
 source =
-    mypydot/
     */site-packages/
 
 [report]
