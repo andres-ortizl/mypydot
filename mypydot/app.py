@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from os.path import exists
+from os.path import exists, join, isdir
 import logging
 import os
 from cfg import Cfg
@@ -13,6 +13,10 @@ class FileManager:
     def file_exists(cls, file_route: str) -> bool:
         result = exists(file_route)
         return result
+
+    @classmethod
+    def folder_exists(cls, folder_route: str) -> bool:
+        return isdir(folder_route)
 
 
 @dataclass
@@ -34,7 +38,11 @@ class SmLink:
 @dataclass
 class App:
     _opt: field(default_factory=dict)
-    _dot_files_dir: str = os.getenv('MYPYDOTFILES')
+    _default_dotfiles_dir: str = join(os.getenv('HOME'), '.mypydotfiles')
+    _mypydotfiles_env_var_name: str = 'MYPYDOTFILES'
+    _dot_files_dir: str = os.getenv(_mypydotfiles_env_var_name, _default_dotfiles_dir)
+    _package_directory: str = os.path.dirname(os.path.abspath(__file__))
+    _bash_rc_route: str = join(os.getenv('HOME'), '.bashrc')
 
     def __post_init__(self):
         self._opt = {
@@ -52,14 +60,41 @@ class App:
         opt_list = list(self._opt.keys())
         logging.error(f'{opt=} not recognized, possible {opt_list}')
 
+    def _copy_template(self):
+        logging.info(f'copying template to {self._dot_files_dir}')
+        if FileManager.folder_exists(self._dot_files_dir):
+            logging.error(f'Folder {self._dot_files_dir} already exists')
+            exit(1)
+        copytree(join(self._package_directory, 'template'), self._dot_files_dir)
+
+    @staticmethod
+    def _add_env_var(var_name: str, var_value: str, file_route: str) -> None:
+        """
+        Add new export env sentence to file
+        :param var_name: Name of the variable
+        :param var_value: Value of the variable
+        :param file_route: Route of the file which we want to use to write the export sentence
+        :return: None
+        """
+        if not FileManager.file_exists(file_route):
+            logging.error(f'Trying to add {var_name=} to {file_route=} but the file does not exist')
+            exit(0)
+        with open(file_route, 'w') as f:
+            logging.info(f'Adding new env var to {file_route=}, {var_name=}, {var_value}')
+            f.write(f'export {var_name}={var_value}')
+
     def init(self) -> None:
         """
         Initialize a new folder with the template structure.
+        Add new env var with the route of the dotfiles folder
         :return: None
         """
-        logging.info(f'copying template to {self._dot_files_dir}')
-        # TODO: Use relative path to library
-        copytree('/template', self._dot_files_dir)
+        self._copy_template()
+        self._add_env_var(
+            var_name=self._mypydotfiles_env_var_name,
+            var_value=self._dot_files_dir,
+            file_route=join(os.getenv('HOME'), '.bashrc'))
+        logging.info('You will need to restart your shell to apply the new changes')
 
     def sync(self) -> None:
         """

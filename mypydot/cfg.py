@@ -1,19 +1,22 @@
 import yaml
-import os
+from os import getenv, sep
+from os.path import join
 from dataclasses import dataclass
 
 
 @dataclass
 class Cfg:
+    _default_conf_name: str = 'conf.yml'
+
     def __post_init__(self):
         self._data = self.__load_cfg()
         self.symlinks = self._data['symlinks']
 
     def __load_cfg(self):
-        with open(os.getenv('CONFIG_PATH')) as f:
+        with open(join(getenv('MYPYDOTFILES'), self._default_conf_name)) as f:
             data = yaml.full_load(f)
-            res = self._parse_env_vars(data)
-            return res
+        res = self._parse_env_vars(data)
+        return res
 
     @staticmethod
     def _parse_env_vars(d: dict):
@@ -21,9 +24,9 @@ class Cfg:
 
         def parse_env(path):
             if path.startswith('$'):
-                return os.getenv(path[1:])
+                return getenv(path[1:])
             if path == '~':
-                return os.getenv('HOME')
+                return getenv('HOME')
             return path
 
         for k, v in d.items():
@@ -31,7 +34,7 @@ class Cfg:
             for s, s_value in d[k].items():
                 path_list = list(map(parse_env, s.split('/')))
                 s_value_list = list(map(parse_env, s_value.split('/')))
-                p = os.path.join(os.sep, *path_list)
-                s_v = os.path.join(os.sep, *s_value_list)
+                p = join(sep, *path_list)
+                s_v = join(sep, *s_value_list)
                 res[k][p] = s_v
         return res

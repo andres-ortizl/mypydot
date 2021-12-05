@@ -6,6 +6,3 @@ if __name__ == '__main__':
     app = App(None)
     f = app.parse_opt('init')
     f()
-    input()
-    e = app.parse_opt('sync')
-    e()
