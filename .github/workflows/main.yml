@@ -54,7 +54,9 @@ jobs:
       - name: Run Tests
         run: |
           PYTHONPATH=mypydot/ poetry run pytest --cov --cov-report=xml 
-          sed -i 's/\/home\/runner\/work\/mypydot\/mypydot\//\/github\/workspace\//g' coverage.xml
+
+      - name: Fix Tests
+        run: sed -i 's/\/home\/runner\/work\/mypydot\/mypydot\//\/github\/workspace\//g' coverage.xml
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
