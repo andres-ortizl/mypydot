@@ -39,5 +39,4 @@ PHONY: run-lint
 run-lint : build
 	@docker run  -t \
 		--name=$(PROJECT_NAME) \
-		-v ${LOCAL_ETL_DIR}:/opt/etls/$(PROJECT_NAME) \
 		--rm $(DOCKER_IMAGE):$(DOCKER_TAG) poetry run flake8
