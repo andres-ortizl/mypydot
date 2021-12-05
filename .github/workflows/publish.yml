@@ -1,0 +1,22 @@
+name: Python package
+on:
+  push:
+    tags:
+      - "v*.*.*"
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and publish to pypi
+        uses: JRubics/poetry-publish@v1.9
+        with:
+          python_version: "3.9"
+          poetry_version: "==1.1.11" # (PIP version specifier syntax)
+          pypi_token: ${{ secrets.PYPI_TOKEN }}
+          build_format: "sdist"
+          allow_poetry_pre_release: "no"
+          ignore_dev_requirements: "yes"
+
