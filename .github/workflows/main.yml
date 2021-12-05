@@ -53,7 +53,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          PYTHONPATH=mypydot/ poetry run pytest --cov --cov-report=xml 
+          PYTHONPATH=mypydot/ poetry run pytest --cov="mypydot" --cov-report=xml 
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
