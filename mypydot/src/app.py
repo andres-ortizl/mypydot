@@ -69,7 +69,7 @@ class App:
             logging.error(f'Folder {self._dot_files_dir} already exists')
             exit(1)
         copytree(
-            join(self._package_directory, 'template'),
+            join(self._package_directory, '../template'),
             self._dot_files_dir
         )
 
