@@ -40,7 +40,10 @@ class App:
     _opt: field(default_factory=dict)
     _default_dotfiles_dir: str = join(os.getenv('HOME'), '.mypydotfiles')
     _mypydotfiles_env_var_name: str = 'MYPYDOTFILES'
-    _dot_files_dir: str = os.getenv(_mypydotfiles_env_var_name, _default_dotfiles_dir)
+    _dot_files_dir: str = os.getenv(
+        _mypydotfiles_env_var_name,
+        _default_dotfiles_dir
+    )
     _package_directory: str = os.path.dirname(os.path.abspath(__file__))
     _bash_rc_route: str = join(os.getenv('HOME'), '.bashrc')
 
@@ -65,7 +68,10 @@ class App:
         if FileManager.folder_exists(self._dot_files_dir):
             logging.error(f'Folder {self._dot_files_dir} already exists')
             exit(1)
-        copytree(join(self._package_directory, 'template'), self._dot_files_dir)
+        copytree(
+            join(self._package_directory, 'template'),
+            self._dot_files_dir
+        )
 
     @staticmethod
     def _add_env_var(var_name: str, var_value: str, file_route: str) -> None:
@@ -73,14 +79,17 @@ class App:
         Add new export env sentence to file
         :param var_name: Name of the variable
         :param var_value: Value of the variable
-        :param file_route: Route of the file which we want to use to write the export sentence
+        :param file_route: Route of the file which we want to use to write
+        the export sentence
         :return: None
         """
         if not FileManager.file_exists(file_route):
-            logging.error(f'Trying to add {var_name=} to {file_route=} but the file does not exist')
+            msg = f'{file_route=} doest not exist, cant add new env'
+            logging.error(msg)
             exit(0)
         with open(file_route, 'w') as f:
-            logging.info(f'Adding new env var to {file_route=}, {var_name=}, {var_value}')
+            msg = f'New env var to {file_route=}, {var_name=}, {var_value}'
+            logging.info(msg)
             f.write(f'export {var_name}={var_value}')
 
     def init(self) -> None:
@@ -94,7 +103,7 @@ class App:
             var_name=self._mypydotfiles_env_var_name,
             var_value=self._dot_files_dir,
             file_route=join(os.getenv('HOME'), '.bashrc'))
-        logging.info('You will need to restart your shell to apply the new changes')
+        logging.info('Restart your shell to apply the new changes')
 
     def sync(self) -> None:
         """
