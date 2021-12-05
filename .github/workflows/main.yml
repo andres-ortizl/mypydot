@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -52,6 +54,9 @@ jobs:
       - name: Run Tests
         run: |
           PYTHONPATH=mypydot/ poetry run pytest --cov --cov-report=xml 
+
+      - name: Fix Tests
+        run: sed -i 's/\/home\/runner\/work\/mypydot\/mypydot\//\/github\/workspace\//g' coverage.xml
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
