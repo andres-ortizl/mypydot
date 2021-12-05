@@ -1,10 +1,12 @@
 # .coveragerc to control coverage.py
 [run]
-source = .
 branch = True
+source = mypydot
+# omit = bad_file.py
 
 [paths]
 source =
+    mypydot/
     */site-packages/
 
 [report]
