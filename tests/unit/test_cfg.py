@@ -11,4 +11,7 @@ class TestCfg:
 
         assert str(join(home, '.gitconfig')) in cfg._data['symlinks']
         assert str(join(home, '.zshrc')) in cfg._data['symlinks']
-        assert cfg._data['symlinks'][str(join(home, '.gitconfig'))] == '/./tests/unit/assets/git/.gitconfig'
+
+        config_path = '/./tests/unit/assets/git/.gitconfig'
+        gitconfig_key = cfg._data['symlinks'][str(join(home, '.gitconfig'))]
+        assert gitconfig_key == config_path

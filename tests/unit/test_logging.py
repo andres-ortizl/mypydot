@@ -8,7 +8,3 @@ class TestLogging:
         root = logging.getLogger()
         assert root.level == logging.DEBUG
         assert root.hasHandlers() is True
-
-
-
-
