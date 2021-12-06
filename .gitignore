@@ -7,3 +7,5 @@ mypydotfiles
 .pytest_cache
 .coverage
 **/__pycache__
+htmlcov
+coverage.xml
