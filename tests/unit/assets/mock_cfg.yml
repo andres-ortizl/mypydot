@@ -1,0 +1,13 @@
+symlinks:
+  ~/.bash_profile: $MYPYDOTFILES/shell/bash/.bash_profile
+  ~/.bashrc: $MYPYDOTFILES/shell/bash/.bashrc
+  ~/.gitattributes: $MYPYDOTFILES/git/.gitattributes
+  ~/.gitconfig: $MYPYDOTFILES/git/.gitconfig
+  ~/.gitignore_global: $MYPYDOTFILES/git/.gitignore_global
+  ~/.profile: $MYPYDOTFILES/shell/bash/.profile
+  ~/.vimrc: $MYPYDOTFILES/editors/vim/.vimrc
+  ~/.zimrc: $MYPYDOTFILES/shell/zsh/.zimrc
+  ~/.zlogin: $MYPYDOTFILES/shell/zsh/.zlogin
+  ~/.zshenv: $MYPYDOTFILES/shell/zsh/.zshenv
+  ~/.zshrc: $MYPYDOTFILES/shell/zsh/.zshrc
+  ~/.docker/config.json: $MYPYDOTFILES/shell/tools/docker/config.json
