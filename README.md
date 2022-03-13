@@ -5,7 +5,7 @@
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=mypydot&metric=bugs)](https://sonarcloud.io/summary/new_code?id=mypydot)
 ## Mypydot
 
-Mypydot is a tool create for managing your dotfiles using a Python application
+Mypydot is a tool created for managing your dotfiles using a Python application
 
 ## Status
 
