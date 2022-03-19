@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && pip install --no-cache-dir --upgrade "poetry==1.1.11"
 
-ARG BASE_ROUTE=/opt/app
+ARG BASE_ROUTE=/opt/app/
 ENV PYTHONPATH=/opt/app/mypydot/src
 WORKDIR "${BASE_ROUTE}"
 

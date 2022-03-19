@@ -1,4 +1,11 @@
 from app import App
+import pytest
+import uuid
+from os import getcwd
+from os.path import join
+import shutil
+import os
+from main import main
 
 
 class TestApp:
@@ -7,20 +14,34 @@ class TestApp:
         assert isinstance(app, App)
 
     def test_parse_opt_fake(self):
-        app = App()
-        res = app.parse_opt('not_exists')
-        assert res is None
+        with pytest.raises(SystemExit):
+            app = App()
+            app.parse_opt('not_exists')
 
     def test_parse_opt(self):
         app = App()
         res = app.parse_opt('create')
         assert res is not None
 
+    def test_copy_template(self):
+        app = App()
+        app._dot_files_dir = join(getcwd(), str(uuid.uuid4()))
+        app._copy_template()
+        shutil.rmtree(app._dot_files_dir)
+
+    def test_copy_template_existing_folder(self):
+        path = join(getcwd(), str(uuid.uuid4()))
+        os.mkdir(path)
+        app = App()
+        app._dot_files_dir = path
+        with pytest.raises(SystemExit):
+            app._copy_template()
+        shutil.rmtree(app._dot_files_dir)
+
     def test_create(self):
-        pass
+        f = main('create')
+        f()
 
-    def test_resync(self):
-        pass
-
-    def test_install(self):
-        pass
+    def test_sync(self):
+        f = main('sync')
+        f()
