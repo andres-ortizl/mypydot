@@ -1,3 +1,5 @@
+import pytest
+
 from cfg import Cfg
 from os import getenv, environ
 from os.path import join
@@ -15,3 +17,8 @@ class TestCfg:
         config_path = '/./tests/unit/assets/git/.gitconfig'
         gitconfig_key = cfg._data['git'][str(join(home, '.gitconfig'))]
         assert gitconfig_key == config_path
+
+    def test_not_found_cfg(self):
+        with pytest.raises(SystemExit):
+            environ['MYPYDOTFILES'] = './tests/unit/assets'
+            Cfg(_default_conf_name='mock_fake_cfg.yml')
