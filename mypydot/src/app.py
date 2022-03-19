@@ -6,6 +6,12 @@ from cfg import Cfg
 from shutil import copytree
 from typing import Union, Callable
 import emoji
+from enum import Enum
+
+
+class Opt(str, Enum):
+    CREATE = "create"
+    SYNC = "sync"
 
 
 @dataclass
@@ -31,7 +37,8 @@ class SmLink:
         if not FileManager.file_exists(src):
             logging.debug(f'Source symlink {src=} file does not exists')
             return False
-        logging.debug(f'Creating symlink.. {src=}  {dst=} {emoji.emojize(":check_mark_button:")}')
+        logging.debug(f'Creating symlink.. {src=}  {dst=} '
+                      f'{emoji.emojize(":check_mark_button:")}')
         os.symlink(src, dst)
         return True
 
@@ -49,9 +56,8 @@ class App:
 
     def __post_init__(self):
         self._opt = {
-            'create': self.create,
-            'install': self.install,
-            'resync': self.resync,
+            Opt.CREATE: self.create,
+            Opt.SYNC: self.sync,
         }
 
     def parse_opt(self, opt) -> Union[None, Callable]:
@@ -62,7 +68,8 @@ class App:
         logging.error(f'{opt=} not recognized, possible {opt_list}')
 
     def _copy_template(self):
-        logging.info(f'copying template to {self._dot_files_dir} {emoji.emojize(":green_book:")}')
+        logging.info(f'copying template to {self._dot_files_dir} '
+                     f'{emoji.emojize(":green_book:")}')
         if FileManager.folder_exists(self._dot_files_dir):
             logging.error(f'Folder {self._dot_files_dir} already exists')
             exit(1)
@@ -82,26 +89,37 @@ class App:
         :return: None
         """
         if not FileManager.file_exists(file_route):
-            msg = f'{file_route=} doest not exist, cant add new env {emoji.emojize(":green_book:")}'
+            msg = f'{file_route=} doest not exist, ' \
+                  f'cant add new env {emoji.emojize(":green_book:")}'
             logging.error(msg)
             exit(0)
-        with open(file_route, 'w') as f:
+        with open(file_route, 'a') as f:
             msg = f'New env var to {file_route=}, {var_name=}, {var_value}'
             logging.info(msg)
-            f.write(f'export {var_name}={var_value}')
+            f.write(f"export {var_name}='{var_value}'\n")
             os.environ[var_name] = var_value
 
-    def create(self) -> None:
-        """
-        Initialize a new folder with the template structure.
-        Add new env var with the route of the dotfiles folder
-        :return: None
-        """
-        self._copy_template()
+    def _set_up_env_vars(self):
         self._add_env_var(
             var_name=self._mypydotfiles_env_var_name,
             var_value=self._dot_files_dir,
             file_route=join(os.getenv('HOME'), '.bashrc'))
+        self._add_env_var(
+            var_name=self._mypydotfiles_env_var_name,
+            var_value=self._dot_files_dir,
+            file_route=join(os.getenv('HOME'), '.zshrc'))
+
+    def create(self) -> None:
+        """
+        Initialize a new folder with the template structure. Add new env var
+        with the route of the dotfiles folder
+        Use case : First time you install the application and want to
+        track every dotfile you want in your new
+        repository
+        :return: None
+        """
+        self._copy_template()
+        self._set_up_env_vars()
         logging.info('Restart your shell to apply the new changes')
         self._sync()
 
@@ -124,12 +142,14 @@ class App:
             ))
             logging.info(f'Ready {module=} {emoji.emojize(":thumbs_up:")}')
 
-    def install(self, dotfiles_route: str):
+    def sync(self):
         """
-        Given an existing dotfiles, sync the information
+        Try to sync again the files inside the $MYPYDOTFILES
+        folder ( if existing )
         :return:
         """
-        print('install')
-
-    def resync(self):
-        pass
+        dotfiles_env = os.getenv(self._mypydotfiles_env_var_name, False)
+        logging.info(f'Sync  {dotfiles_env=}')
+        if not dotfiles_env:
+            self._set_up_env_vars()
+        self._sync()

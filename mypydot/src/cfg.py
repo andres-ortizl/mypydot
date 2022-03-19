@@ -1,3 +1,5 @@
+import logging
+
 import yaml
 from os import getenv, sep
 from os.path import join
@@ -13,10 +15,15 @@ class Cfg:
         self.symlinks = self._data
 
     def __load_cfg(self):
-        with open(join(getenv('MYPYDOTFILES'), self._default_conf_name)) as f:
-            data = yaml.full_load(f)
-        res = self._parse_env_vars(data)
-        return res
+        cfg_path = join(getenv('MYPYDOTFILES'), self._default_conf_name)
+        try:
+            with open(cfg_path, 'r') as f:
+                data = yaml.full_load(f)
+            res = self._parse_env_vars(data)
+            return res
+        except FileNotFoundError:
+            logging.error(f'Configuration file not found in {cfg_path}')
+            exit(1)
 
     @staticmethod
     def _parse_env_vars(d: dict):

@@ -1,7 +1,6 @@
 from app import App
 from logging_manager import LoggingConf
 import click
-from cfg import Cfg
 
 
 @click.command()
@@ -26,4 +25,3 @@ def main(option: str):
 
 if __name__ == '__main__':
     main()
-
