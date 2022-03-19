@@ -66,6 +66,7 @@ class App:
             return r
         opt_list = list(self._opt.keys())
         logging.error(f'{opt=} not recognized, possible {opt_list}')
+        exit(1)
 
     def _copy_template(self):
         logging.info(f'copying template to {self._dot_files_dir} '
@@ -91,8 +92,8 @@ class App:
         if not FileManager.file_exists(file_route):
             msg = f'{file_route=} doest not exist, ' \
                   f'cant add new env {emoji.emojize(":green_book:")}'
-            logging.error(msg)
-            exit(0)
+            logging.warning(msg)
+            return
         with open(file_route, 'a') as f:
             msg = f'New env var to {file_route=}, {var_name=}, {var_value}'
             logging.info(msg)
