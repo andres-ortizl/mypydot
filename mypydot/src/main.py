@@ -17,9 +17,14 @@ def main(test_param=None) -> Callable:
         """
     parser = None
     if not test_param:
-        parser = argparse.ArgumentParser(description='Organize your dotfiles using MYPYDOTFILES')
-        parser.add_argument('--option', type=str, help='Basic action, could be [create, sync]',
-                            choices=[Opt.CREATE, Opt.SYNC])
+        parser = argparse.ArgumentParser(
+            description='Organize your dotfiles using MYPYDOTFILES'
+        )
+        parser.add_argument(
+            '--option', type=str,
+            help='Basic action, could be [create, sync]',
+            choices=[Opt.CREATE, Opt.SYNC]
+        )
 
     cmd = test_param or parser.parse_args().option
     LoggingConf()

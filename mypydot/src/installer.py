@@ -27,7 +27,8 @@ class OSInstaller:
         return False
 
     def dump_brew_file(self):
-        """TBD implement dump of the brew file containing all the SO packages"""
+        """TBD implement dump of the brew file
+        containing all the SO packages"""
         pass
 
 
