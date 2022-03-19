@@ -8,14 +8,14 @@ from app import FileManager
 class OSInstaller:
 
     @classmethod
-    def install_homebrew_packages(cls, brew_file_route: str) -> bool:
+    def install_homebrew_packages(cls, brew_file_route: str, timeout=None) -> bool:
         if not FileManager.file_exists(brew_file_route):
             logging.error(f'file {brew_file_route} does not exist')
             exit(1)
         cmd = f'brew bundle --file {brew_file_route}'
         proc = subprocess.Popen(cmd, shell=True, stdout=True)
         proc.communicate()
-        return_code_brew = proc.wait()
+        return_code_brew = proc.wait(timeout=timeout)
         logging.info(f"return code brew : {return_code_brew}")
 
         if return_code_brew == 0:
