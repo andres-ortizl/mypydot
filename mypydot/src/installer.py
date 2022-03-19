@@ -8,7 +8,10 @@ from app import FileManager
 class OSInstaller:
 
     @classmethod
-    def install_homebrew_packages(cls, brew_file_route: str, timeout=None) -> bool:
+    def install_homebrew_packages(
+            cls,
+            brew_file_route: str,
+            timeout=None) -> bool:
         if not FileManager.file_exists(brew_file_route):
             logging.error(f'file {brew_file_route} does not exist')
             exit(1)
