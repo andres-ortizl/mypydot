@@ -6,11 +6,11 @@ from dataclasses import dataclass
 
 @dataclass
 class Cfg:
-    _default_conf_name: str = 'conf.yml'
+    _default_conf_name: str = '.conf.yml'
 
     def __post_init__(self):
         self._data = self.__load_cfg()
-        self.symlinks = self._data['symlinks']
+        self.symlinks = self._data
 
     def __load_cfg(self):
         with open(join(getenv('MYPYDOTFILES'), self._default_conf_name)) as f:
@@ -29,9 +29,9 @@ class Cfg:
                 return getenv('HOME')
             return path
 
-        for k, v in d.items():
+        for k, v in d['symlinks'].items():
             res[k] = {}
-            for s, s_value in d[k].items():
+            for s, s_value in v.items():
                 path_list = list(map(parse_env, s.split('/')))
                 s_value_list = list(map(parse_env, s_value.split('/')))
                 p = join(sep, *path_list)
