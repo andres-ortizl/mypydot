@@ -1,13 +1,21 @@
 symlinks:
-  ~/.bash_profile: $MYPYDOTFILES/shell/bash/.bash_profile
-  ~/.bashrc: $MYPYDOTFILES/shell/bash/.bashrc
-  ~/.gitattributes: $MYPYDOTFILES/git/.gitattributes
-  ~/.gitconfig: $MYPYDOTFILES/git/.gitconfig
-  ~/.gitignore_global: $MYPYDOTFILES/git/.gitignore_global
-  ~/.profile: $MYPYDOTFILES/shell/bash/.profile
-  ~/.vimrc: $MYPYDOTFILES/editors/vim/.vimrc
-  ~/.zimrc: $MYPYDOTFILES/shell/zsh/.zimrc
-  ~/.zlogin: $MYPYDOTFILES/shell/zsh/.zlogin
-  ~/.zshenv: $MYPYDOTFILES/shell/zsh/.zshenv
-  ~/.zshrc: $MYPYDOTFILES/shell/zsh/.zshrc
-  ~/.docker/config.json: $MYPYDOTFILES/shell/tools/docker/config.json
+  bash:
+    ~/.bash_profile: $MYPYDOTFILES/shell/bash/.bash_profile
+    ~/.bashrc: $MYPYDOTFILES/shell/bash/.bashrc
+    ~/.profile: $MYPYDOTFILES/shell/bash/.profile
+  zsh:
+    ~/.zlogin: $MYPYDOTFILES/shell/zsh/.zlogin
+    ~/.zshenv: $MYPYDOTFILES/shell/zsh/.zshenv
+  zim:
+    ~/.zimrc: $MYPYDOTFILES/shell/zim/.zimrc
+    ~/.zshrc: $MYPYDOTFILES/shell/zim/.zshrc
+  git:
+    ~/.gitattributes: $MYPYDOTFILES/tools/git/.gitattributes
+    ~/.gitconfig: $MYPYDOTFILES/tools/git/.gitconfig
+    ~/.gitignore_global: $MYPYDOTFILES/tools/git/.gitignore_global
+  vim:
+    ~/.vimrc: $MYPYDOTFILES/tools/editors/vim/.vimrc
+  docker:
+    ~/.docker/config.json: $MYPYDOTFILES/tools/docker/config.json
+
+

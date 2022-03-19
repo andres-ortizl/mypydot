@@ -1,4 +1,4 @@
-Copyright (c) 2021 Andrés Ortiz
+Copyright (c) 2022 Andrés Ortiz
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:

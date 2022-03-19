@@ -1,3 +1,0 @@
-symlinks:
-  /Users/andrew/Code/mypydot/example_files/.bash_profile: $MYPYDOTFILES/shell/bash/.bash_profile
-  /Users/andrew/Code/mypydot/example_files/.bashrc: $MYPYDOTFILES/shell/bash/.bashrc

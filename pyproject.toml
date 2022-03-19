@@ -1,13 +1,29 @@
 [tool.poetry]
 name = "mypydot"
 version = "2021.0.1"
-description = ""
+description = "Python package to manage your dotfiles"
 authors = ["Andrés Ortiz <andrs.ortizl@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/andres-ortizl/mypydot"
+repository = "https://github.com/andres-ortizl/mypydot"
+keywords = ["mypydot", "dotfiles", "python"]
+classifiers = [
+    "Environment :: Console",
+    "Framework :: mypydot",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: DotFiles",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
 
-
+include = [
+    "LICENSE",
+]
 [tool.poetry.dependencies]
 python = "^3.8"
 PyYAML = "6.0"
+click = "^8.0.3"
+emoji = "^1.6.1"
 
 
 [tool.poetry.dev-dependencies]
@@ -20,3 +36,6 @@ coverage-badge = "^1.1.0"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+mypydot = 'mypydot.src.__main__:main'
