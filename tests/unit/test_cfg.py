@@ -9,9 +9,9 @@ class TestCfg:
         cfg = Cfg(_default_conf_name='mock_cfg.yml')
         home = getenv('HOME')
 
-        assert str(join(home, '.gitconfig')) in cfg._data['symlinks']
-        assert str(join(home, '.zshrc')) in cfg._data['symlinks']
+        assert 'git' in cfg._data
+        assert 'zsh' in cfg._data
 
         config_path = '/./tests/unit/assets/git/.gitconfig'
-        gitconfig_key = cfg._data['symlinks'][str(join(home, '.gitconfig'))]
+        gitconfig_key = cfg._data['git'][str(join(home, '.gitconfig'))]
         assert gitconfig_key == config_path
