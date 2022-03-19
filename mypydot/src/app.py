@@ -1,10 +1,11 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from os.path import exists, join, isdir
 import logging
 import os
 from cfg import Cfg
 from shutil import copytree
 from typing import Union, Callable
+import emoji
 
 
 @dataclass
@@ -30,14 +31,13 @@ class SmLink:
         if not FileManager.file_exists(src):
             logging.debug(f'Source symlink {src=} file does not exists')
             return False
-        logging.debug(f'Creating symlink ..{src=}  {dst=}')
+        logging.debug(f'Creating symlink.. {src=}  {dst=} {emoji.emojize(":check_mark_button:")}')
         os.symlink(src, dst)
         return True
 
 
 @dataclass
 class App:
-    _opt: field(default_factory=dict)
     _default_dotfiles_dir: str = join(os.getenv('HOME'), '.mypydotfiles')
     _mypydotfiles_env_var_name: str = 'MYPYDOTFILES'
     _dot_files_dir: str = os.getenv(
@@ -49,11 +49,9 @@ class App:
 
     def __post_init__(self):
         self._opt = {
-            'init': self.init,
+            'create': self.create,
             'install': self.install,
-            'doctor': self.doctor,
-            'sync': self.sync,
-            'restore': self.restore
+            'resync': self.resync,
         }
 
     def parse_opt(self, opt) -> Union[None, Callable]:
@@ -64,7 +62,7 @@ class App:
         logging.error(f'{opt=} not recognized, possible {opt_list}')
 
     def _copy_template(self):
-        logging.info(f'copying template to {self._dot_files_dir}')
+        logging.info(f'copying template to {self._dot_files_dir} {emoji.emojize(":green_book:")}')
         if FileManager.folder_exists(self._dot_files_dir):
             logging.error(f'Folder {self._dot_files_dir} already exists')
             exit(1)
@@ -84,15 +82,16 @@ class App:
         :return: None
         """
         if not FileManager.file_exists(file_route):
-            msg = f'{file_route=} doest not exist, cant add new env'
+            msg = f'{file_route=} doest not exist, cant add new env {emoji.emojize(":green_book:")}'
             logging.error(msg)
             exit(0)
         with open(file_route, 'w') as f:
             msg = f'New env var to {file_route=}, {var_name=}, {var_value}'
             logging.info(msg)
             f.write(f'export {var_name}={var_value}')
+            os.environ[var_name] = var_value
 
-    def init(self) -> None:
+    def create(self) -> None:
         """
         Initialize a new folder with the template structure.
         Add new env var with the route of the dotfiles folder
@@ -104,32 +103,33 @@ class App:
             var_value=self._dot_files_dir,
             file_route=join(os.getenv('HOME'), '.bashrc'))
         logging.info('Restart your shell to apply the new changes')
+        self._sync()
 
-    def sync(self) -> None:
+    @staticmethod
+    def _sync() -> None:
         """
         Sync files creating a symlink using the conf.yml files.
         :return:
         """
         logging.info('syncing dotfiles from conf.yml')
         cfg: Cfg = Cfg()
-        # TODO: Review
-        list(map(
-            lambda key: SmLink.create_sym_link(
-                key,
-                cfg.symlinks[key]
-            ),
-            cfg.symlinks.keys()
-        ))
+        for module, sm_links_dict in cfg.symlinks.items():
+            logging.info(f'Creating symlinks for {module=}')
+            list(map(
+                lambda key: SmLink.create_sym_link(
+                    key,
+                    sm_links_dict[key]
+                ),
+                sm_links_dict.keys()
+            ))
+            logging.info(f'Ready {module=} {emoji.emojize(":thumbs_up:")}')
 
-    def install(self):
+    def install(self, dotfiles_route: str):
         """
-        Given an existing dotfiles, restore the information.
+        Given an existing dotfiles, sync the information
         :return:
         """
         print('install')
 
-    def doctor(self):
-        print('doctor')
-
-    def restore(self):
-        print('restore')
+    def resync(self):
+        pass
