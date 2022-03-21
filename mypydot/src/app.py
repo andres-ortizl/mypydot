@@ -53,6 +53,8 @@ class App:
     )
     _package_directory: str = os.path.dirname(os.path.abspath(__file__))
     _bash_rc_route: str = join(os.getenv('HOME'), '.bashrc')
+    _zsh_rc_route: str = join(os.getenv('HOME'), '.zshrc')
+    _main_shell_script: str = f'${_mypydotfiles_env_var_name}/shell/main.sh'
 
     def __post_init__(self):
         self._opt = {
@@ -80,11 +82,10 @@ class App:
         )
 
     @staticmethod
-    def _add_env_var(var_name: str, var_value: str, file_route: str) -> None:
+    def _write_to_file(value: str, file_route: str) -> None:
         """
         Add new export env sentence to file
-        :param var_name: Name of the variable
-        :param var_value: Value of the variable
+        :param value: Name of the variable
         :param file_route: Route of the file which we want to use to write
         the export sentence
         :return: None
@@ -95,20 +96,25 @@ class App:
             logging.warning(msg)
             return
         with open(file_route, 'a') as f:
-            msg = f'New env var to {file_route=}, {var_name=}, {var_value}'
+            msg = f'New {value=} in {file_route}'
             logging.info(msg)
-            f.write(f"export {var_name}='{var_value}'\n")
-            os.environ[var_name] = var_value
+            f.write(f'{value}\n')
 
     def _set_up_env_vars(self):
-        self._add_env_var(
-            var_name=self._mypydotfiles_env_var_name,
-            var_value=self._dot_files_dir,
-            file_route=join(os.getenv('HOME'), '.bashrc'))
-        self._add_env_var(
-            var_name=self._mypydotfiles_env_var_name,
-            var_value=self._dot_files_dir,
-            file_route=join(os.getenv('HOME'), '.zshrc'))
+        self._write_to_file(
+            f'export {self._mypydotfiles_env_var_name}={self._dot_files_dir}',
+            file_route=self._bash_rc_route)
+        self._write_to_file(
+            f'export {self._mypydotfiles_env_var_name}={self._dot_files_dir}',
+            file_route=self._zsh_rc_route)
+
+        self._write_to_file(
+            f'source {self._main_shell_script}',
+            file_route=self._bash_rc_route)
+        self._write_to_file(
+            f'source {self._main_shell_script}',
+            file_route=self._zsh_rc_route)
+        os.environ[self._mypydotfiles_env_var_name] = self._dot_files_dir
 
     def create(self) -> None:
         """
