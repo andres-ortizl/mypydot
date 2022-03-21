@@ -1,6 +1,5 @@
 import pytest
-
-from cfg import Cfg
+from mypydot.src.cfg import Cfg
 from os import getenv, environ
 from os.path import join
 

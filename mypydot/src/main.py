@@ -1,6 +1,5 @@
-from app import App
-from logging_manager import LoggingConf
-from app import Opt
+from mypydot.src.logging_manager import LoggingConf
+from mypydot.src.app import Opt, App
 from typing import Callable
 import argparse
 
@@ -31,3 +30,13 @@ def main(test_param=None) -> Callable:
     app = App()
     fun = app.parse_opt(cmd)
     return fun
+
+
+def entry_point():
+    fun = main()
+    fun()
+
+
+if __name__ == '__main__':
+    f = main()
+    f()

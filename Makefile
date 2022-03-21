@@ -1,8 +1,6 @@
 .DEFAULT_GOAL := help
 PROJECT_NAME = mypydot
 DOCKER_IMAGE ?= $(PROJECT_NAME)
-ENV_FILE ?= .env
-LOCAL_ENV_FILE ?= .envrc
 LOCAL_ETL_DIR ?= $(shell pwd)
 
 DOCKER_TAG ?= latest

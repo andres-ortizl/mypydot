@@ -1,11 +1,11 @@
-from app import App
+from mypydot.src.app import App
 import pytest
 import uuid
 from os import getcwd
 from os.path import join
 import shutil
 import os
-from main import main
+from mypydot.src.main import main
 
 
 class TestApp:

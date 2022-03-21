@@ -1,4 +1,4 @@
-from main import main
+from mypydot.src.main import main
 
 
 class TestMain:

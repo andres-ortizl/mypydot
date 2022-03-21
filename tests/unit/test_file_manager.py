@@ -1,4 +1,4 @@
-from app import FileManager
+from mypydot.src.app import FileManager
 from os import getcwd
 from os.path import join, dirname, abspath
 import uuid
