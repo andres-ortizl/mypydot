@@ -6,9 +6,9 @@ symlinks:
   zsh:
     ~/.zlogin: $MYPYDOTFILES/shell/zsh/.zlogin
     ~/.zshenv: $MYPYDOTFILES/shell/zsh/.zshenv
+    ~/.zshrc: $MYPYDOTFILES/shell/zim/.zshrc
   zim:
     ~/.zimrc: $MYPYDOTFILES/shell/zim/.zimrc
-    ~/.zshrc: $MYPYDOTFILES/shell/zim/.zshrc
   git:
     ~/.gitattributes: $MYPYDOTFILES/tools/git/.gitattributes
     ~/.gitconfig: $MYPYDOTFILES/tools/git/.gitconfig
