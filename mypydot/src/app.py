@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from os.path import exists, join, isdir
-import logging
+from mypydot.src.logging_manager import logging
+from mypydot.src.cfg import Cfg
 import os
-from cfg import Cfg
 from shutil import copytree
 from typing import Union, Callable
 import emoji

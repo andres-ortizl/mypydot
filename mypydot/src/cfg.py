@@ -1,5 +1,4 @@
 import logging
-
 import yaml
 from os import getenv, sep
 from os.path import join

@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && pip install --no-cache-dir --upgrade "poetry==1.1.11"
 
 ARG BASE_ROUTE=/opt/app/
-ENV PYTHONPATH=/opt/app/mypydot/src
+ENV PYTHONPATH=/opt/app/
 WORKDIR "${BASE_ROUTE}"
 
 COPY poetry.lock "${BASE_ROUTE}"

@@ -11,3 +11,4 @@ htmlcov
 coverage.xml
 __pycache__
 __pycache/
+dist/

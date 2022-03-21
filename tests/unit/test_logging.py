@@ -1,4 +1,4 @@
-from logging_manager import LoggingConf
+from mypydot.src.logging_manager import LoggingConf
 import logging
 
 

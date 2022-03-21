@@ -1,5 +1,5 @@
 import os.path
-from app import SmLink
+from mypydot.src.app import SmLink
 import uuid
 from os import path, remove
 
