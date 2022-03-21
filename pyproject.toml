@@ -11,9 +11,9 @@ keywords = ["mypydot", "dotfiles", "python"]
 classifiers = [
     "Topic :: Software Development :: Build Tools",
     "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Environment :: Console",
-    "Topic :: Operating System :: MacOS",
-    "Topic :: Operating System :: POSIX :: Linux"
+    "Environment :: Console",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux"
 ]
 
 
