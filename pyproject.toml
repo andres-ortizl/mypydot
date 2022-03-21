@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mypydot"
-version = "2021.0.1"
+version = "2022.1.0"
 description = "Python package to manage your dotfiles"
 authors = ["Andrés Ortiz <andrs.ortizl@gmail.com>"]
 license = "MIT"
@@ -31,7 +31,6 @@ pytest = "^6.2.5"
 flake8 = "^4.0.1"
 pytest-cov = "^3.0.0"
 coverage-badge = "^1.1.0"
-
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
