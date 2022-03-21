@@ -9,12 +9,13 @@ homepage = "https://github.com/andres-ortizl/mypydot"
 repository = "https://github.com/andres-ortizl/mypydot"
 keywords = ["mypydot", "dotfiles", "python"]
 classifiers = [
-    "Environment :: Console",
-    "Framework :: mypydot",
-    "Operating System :: OS Independent",
-    "Topic :: Software Development :: DotFiles",
-    "Topic :: Software Development :: Libraries :: Python Modules"
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Environment :: Console",
+    "Topic :: Operating System :: MacOS",
+    "Topic :: Operating System :: POSIX :: Linux"
 ]
+
 
 include = [
     "LICENSE",
