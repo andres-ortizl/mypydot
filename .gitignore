@@ -12,3 +12,5 @@ coverage.xml
 __pycache__
 __pycache/
 dist/
+.DS_Store
+*.pyc

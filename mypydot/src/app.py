@@ -39,7 +39,7 @@ class SmLink:
             return False
         logging.debug(f'Creating symlink.. {src=}  {dst=} '
                       f'{emoji.emojize(":check_mark_button:")}')
-        os.symlink(src, dst)
+        os.link(src, dst)
         return True
 
 
