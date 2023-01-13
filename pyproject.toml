@@ -24,6 +24,7 @@ include = [
 python = "^3.11.1"
 PyYAML = "6.0"
 emoji = "^2.2.0"
+PyTermGUI = "^7.3.0"
 
 
 [tool.poetry.dev-dependencies]
@@ -31,7 +32,8 @@ pytest = "^7.2.0"
 flake8 = "^6.0.0"
 pytest-cov = "^4.0.0"
 coverage-badge = "^1.1.0"
-PyTermGUI = "^7.3.0"
+pre-commit = "^2.21.0"
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
