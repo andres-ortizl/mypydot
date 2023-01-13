@@ -20,7 +20,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.9"
+          python-version: "3.11.1"
 
       - name: Code Lint
         uses: py-actions/flake8@v1
@@ -33,7 +33,7 @@ jobs:
       - name: Install poetry
         uses: abatilo/actions-poetry@v2.0.0
         with:
-          poetry-version: 1.1.11
+          poetry-version: 1.3.2
 
       - name: Cache Poetry virtualenv
         uses: actions/cache@v2
