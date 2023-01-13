@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.11.1-slim
 
 LABEL maintainer="andrs.ortizl@gmail.com" \
       app="mypydot" \
@@ -7,7 +7,7 @@ LABEL maintainer="andrs.ortizl@gmail.com" \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && pip install --no-cache-dir --upgrade "poetry==1.1.11"
+    && pip install --no-cache-dir --upgrade "poetry==1.3.2"
 
 ARG BASE_ROUTE=/opt/app/
 ENV PYTHONPATH=/opt/app/

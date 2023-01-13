@@ -30,7 +30,7 @@ in your $HOME directory. In this folder you will find the following folder struc
 | `language` | In case you want to save some dotfiles related with your favourite programming languages                                      |  
 | `os`       | Operating system dotfiles                                                                                                     |  
 | `shell`    | Everything related to bash & zsh, etc..                                                                                       |  
-| `tools`    | Docker, Git, Editors, etc. You can also find here a few almost empty scripts for storing your aliases, exports and functions. |  
+| `config`   | Docker, Git, Editors, etc. You can also find here a few almost empty scripts for storing your aliases, exports and functions. |  
 | `conf.yml` | This file contains every file that you want to track in your dotfiles repository, feel free to add & remove symlinks !        |  
 
 Once you run this process you will notice that you have a few new lines your .bashrc and in your .zshrc
