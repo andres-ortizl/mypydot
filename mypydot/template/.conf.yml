@@ -1,21 +1,21 @@
 symlinks:
   bash:
-    ~/.bash_profile: $MYPYDOTFILES/shell/bash/.bash_profile
-    ~/.bashrc: $MYPYDOTFILES/shell/bash/.bashrc
-    ~/.profile: $MYPYDOTFILES/shell/bash/.profile
+    ~/.bash_profile: $MYPYDOTFILES/config/.bash_profile
+    ~/.bashrc: $MYPYDOTFILES/config/.bashrc
+    ~/.profile: $MYPYDOTFILES/config/.profile
   zsh:
-    ~/.zlogin: $MYPYDOTFILES/shell/zsh/.zlogin
-    ~/.zshenv: $MYPYDOTFILES/shell/zsh/.zshenv
-    ~/.zshrc: $MYPYDOTFILES/shell/zim/.zshrc
+    ~/.zlogin: $MYPYDOTFILES/config/.zlogin
+    ~/.zshenv: $MYPYDOTFILES/config/.zshenv
+    ~/.zshrc: $MYPYDOTFILES/config/.zshrc
   zim:
-    ~/.zimrc: $MYPYDOTFILES/shell/zim/.zimrc
+    ~/.zimrc: $MYPYDOTFILES/config/.zimrc
   git:
-    ~/.gitattributes: $MYPYDOTFILES/tools/git/.gitattributes
-    ~/.gitconfig: $MYPYDOTFILES/tools/git/.gitconfig
-    ~/.gitignore_global: $MYPYDOTFILES/tools/git/.gitignore_global
+    ~/.gitattributes: $MYPYDOTFILES/config/git/.gitattributes
+    ~/.gitconfig: $MYPYDOTFILES/config/git/.gitconfig
+    ~/.gitignore_global: $MYPYDOTFILES/config/git/.gitignore_global
   vim:
-    ~/.vimrc: $MYPYDOTFILES/tools/editors/vim/.vimrc
+    ~/.vimrc: $MYPYDOTFILES/config/editors/vim/.vimrc
   docker:
-    ~/.docker/config.json: $MYPYDOTFILES/tools/docker/config.json
+    ~/.docker/config.json: $MYPYDOTFILES/config/docker/config.json
 
 
