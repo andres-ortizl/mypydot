@@ -9,23 +9,26 @@ from pytermgui import Container
 
 @dataclass
 class HomeScreen:
-
     @staticmethod
     def submit(button: ptg.Button) -> None:
         print(button.label)
 
     def default_cfg_options(self):
-        return [ptg.Button('.conf.yml', onclick=self.submit)]
+        return [ptg.Button(".conf.yml", onclick=self.submit)]
 
     @staticmethod
     def default_found_cfg_message():
-        return [ptg.Label("[bold] Configurations file found[/bold]"),
-                ptg.Label("[bold]Select a configuration file to sync  [/bold]")]
+        return [
+            ptg.Label("[bold] Configurations file found[/bold]"),
+            ptg.Label("[bold]Select a configuration file to sync  [/bold]"),
+        ]
 
     @staticmethod
     def default_not_found_cfg_message():
-        return [ptg.Label("[bold] Configuration file not found.[/bold]"),
-                ptg.Label("[bold] Creating a new one for you.[/bold]")]
+        return [
+            ptg.Label("[bold] Configuration file not found.[/bold]"),
+            ptg.Label("[bold] Creating a new one for you.[/bold]"),
+        ]
 
     def render(self, configuration_file_list: list[str]) -> None:
         cfg_options = self.default_cfg_options()
@@ -68,7 +71,10 @@ class PackageSelection:
             self.package_to_install.append(button.label)
 
     def render(self) -> None:
-        package_list_buttons = [ptg.Button(label=package, onclick=self.submit) for package in self.package_list]
+        package_list_buttons = [
+            ptg.Button(label=package, onclick=self.submit)
+            for package in self.package_list
+        ]
         # Package selection using a simple checkbox for each of them
         # that are available in the conf.yml file
         with ptg.WindowManager() as manager:
@@ -95,7 +101,6 @@ class PackageSelection:
 
 
 class InstallingLoop(Container):
-
     def __init__(self, package_list, timeout: float, **attrs) -> None:
         super().__init__(**attrs)
         self.timeout = timeout
@@ -116,8 +121,8 @@ class InstallingLoop(Container):
 @dataclass
 class InstallPackages:
     package_list: list
-
-    # render the installation of packages with an animation using the window manager and the animation class
+    # render the installation of packages with
+    # an animation using the window manager and the animation class
     def render(self):
         with ptg.WindowManager() as manager:
             window = (
@@ -133,7 +138,8 @@ class InstallPackages:
                     box="ROUNDED",
                     height=20,
                     overflow=ptg.Overflow.SCROLL,
-                ).set_title(f"{GRADIENT_PURPLE}[ bold] MyPyDot [/bold]")
+                )
+                .set_title(f"{GRADIENT_PURPLE}[ bold] MyPyDot [/bold]")
                 .center()
             )
             manager.add(window)

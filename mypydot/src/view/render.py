@@ -1,5 +1,10 @@
 from dataclasses import dataclass
-from mypydot.src.view.components import HomeScreen, PackageSelection, InstallPackages, GoodByeScreen
+from mypydot.src.view.components import (
+    HomeScreen,
+    PackageSelection,
+    InstallPackages,
+    GoodByeScreen,
+)
 from mypydot.src.view.style import Style
 
 
