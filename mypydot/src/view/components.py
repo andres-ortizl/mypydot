@@ -71,7 +71,10 @@ class PackageSelection:
         if button.label == "install all":
             self.package_to_install = self.package_list
         elif button.label == "install selected":
-            self.manager.stop()
+            if not self.package_to_install:
+                self.manager.toast("No package selected")
+            else:
+                self.manager.stop()
         else:
             button.styles._current = SUCCESS_LABEL
             self.package_to_install.append(button.label)

@@ -1,12 +1,19 @@
 [![PyPI version](https://badge.fury.io/py/mypydot.svg)](https://badge.fury.io/py/mypydot)
 ![CI](https://github.com/andres-ortizl/mypydot/actions/workflows/main.yml/badge.svg)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mypydot&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=mypydot)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=mypydot&metric=coverage)](https://sonarcloud.io/summary/new_code?id=mypydot)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=mypydot&metric=bugs)](https://sonarcloud.io/summary/new_code?id=mypydot)
 
 ## Mypydot
 
 Mypydot is a tool created for managing your dotfiles using a Python application
+
+## Showcase
+
+small screenshots of the application
+![home](screenshots/home.png)
+![selection](screenshots/selection.png)
+![installing](screenshots/installing.png)
+![bye](screenshots/bye.png)
 
 # Motivation
 
@@ -22,16 +29,16 @@ to me rather than do It using shell scripting.
 
 ### Create new dotfiles
 
-Using it for the first time : ```mypydot --option create``` . This command will create a new folder called .mypydotfiles
+Using it for the first time : ```mypydot``` . This command will create a new folder called .mypydotfiles
 in your $HOME directory. In this folder you will find the following folder structure :
 
-| Folder     |                                                                                                                               | 
+| Folder     |                                                                                                                               |
 |------------|-------------------------------------------------------------------------------------------------------------------------------|
-| `language` | In case you want to save some dotfiles related with your favourite programming languages                                      |  
-| `os`       | Operating system dotfiles                                                                                                     |  
-| `shell`    | Everything related to bash & zsh, etc..                                                                                       |  
-| `config`   | Docker, Git, Editors, etc. You can also find here a few almost empty scripts for storing your aliases, exports and functions. |  
-| `conf.yml` | This file contains every file that you want to track in your dotfiles repository, feel free to add & remove symlinks !        |  
+| `language` | In case you want to save some dotfiles related with your favourite programming languages                                      |
+| `os`       | Operating system dotfiles                                                                                                     |
+| `shell`    | Small setup of aliases and exports that can be accessed from everywhere                                                       |
+| `config`   | Docker, Git, Editors, etc. You can also find here a few almost empty scripts for storing your aliases, exports and functions. |
+| `conf.yml` | This file contains every file that you want to track in your dotfiles repository, feel free to add & remove symlinks !        |
 
 Once you run this process you will notice that you have a few new lines your .bashrc and in your .zshrc
 
@@ -43,9 +50,9 @@ source $MYPYDOTFILES/shell/main.sh
 This lines will be used to source yours aliases, exports and functions to be available in your terminal.
 Besides that, nothing else is edited.
 
-### Resync dotfiles ( for restoring or sync new files)
+### Resync dotfiles
 
-```mypydot --option sync``` . This will iterate again over your .conf.yml file trying to sync new dotfiles.
+Select your existing conf file and the modules you want to resync / install
 
 # References
 
