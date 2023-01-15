@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mypydot"
-version = "2022.1.1"
+version = "2023.0.1"
 description = "Python package to manage your dotfiles"
 authors = ["Andrés Ortiz <andrs.ortizl@gmail.com>"]
 license = "MIT"
