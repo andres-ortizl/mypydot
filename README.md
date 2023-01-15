@@ -10,10 +10,11 @@ Mypydot is a tool created for managing your dotfiles using a Python application
 ## Showcase
 
 small screenshots of the application
-![home](screenshots/home.png)
-![selection](screenshots/selection.png)
-![installing](screenshots/installing.png)
-![bye](screenshots/bye.png)
+
+|                                           |                                         |
+|-------------------------------------------|-----------------------------------------|
+| ![Home](screenshots/home.png)             | ![selection](screenshots/selection.png) |
+| ![Installing](screenshots/installing.png) | ![Bye](screenshots/bye.png)             |
 
 # Motivation
 
