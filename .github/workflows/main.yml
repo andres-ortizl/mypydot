@@ -56,7 +56,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          PYTHONPATH=mypydot/src/ poetry run pytest --cov --cov-report=xml --cov-report=html
+          PYTHONPATH=mypydot/src/ poetry run pytest -s --cov --cov-report=xml --cov-report=html
 
       - name: Fix Tests
         run: sed -i 's/\/home\/runner\/work\/mypydot\/mypydot\//\/github\/workspace\//g' coverage.xml

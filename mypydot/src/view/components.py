@@ -3,18 +3,18 @@ import pytermgui as ptg
 from dataclasses import dataclass
 from threading import Thread
 from time import sleep
-from mypydot.src.view.style import GRADIENT_PURPLE, GRADIENT_GREEN
+from mypydot.src.view.style import GRADIENT_PURPLE, SUCCESS_LABEL
 from pytermgui import Container
 
 
 @dataclass
 class HomeScreen:
-    @staticmethod
-    def submit(button: ptg.Button) -> None:
-        print(button.label)
+    OUTPUT = ""
+    manager: ptg.WindowManager = None
 
-    def default_cfg_options(self):
-        return [ptg.Button(".conf.yml", onclick=self.submit)]
+    def _submit(self, button: ptg.Button):
+        self.OUTPUT = button.label
+        self.manager.stop()
 
     @staticmethod
     def default_found_cfg_message():
@@ -30,13 +30,13 @@ class HomeScreen:
             ptg.Label("[bold] Creating a new one for you.[/bold]"),
         ]
 
-    def render(self, configuration_file_list: list[str]) -> None:
-        cfg_options = self.default_cfg_options()
+    def render(self, found: bool, configuration_file_list: list[str]) -> str:
         message = self.default_not_found_cfg_message()
-        if configuration_file_list:
-            cfg_options = [ptg.Button(cfg_file) for cfg_file in configuration_file_list]
+        if found:
             message = self.default_found_cfg_message()
+
         with ptg.WindowManager() as manager:
+            self.manager = manager
             window = (
                 ptg.Window(
                     "",
@@ -46,7 +46,10 @@ class HomeScreen:
                     "",
                     *message,
                     "",
-                    *cfg_options,
+                    *[
+                        ptg.Button(cfg_file, onclick=self._submit)
+                        for cfg_file in configuration_file_list
+                    ],
                     "",
                     width=60,
                     box="DOUBLE",
@@ -55,29 +58,29 @@ class HomeScreen:
                 .center()
             )
             manager.add(window)
+        return self.OUTPUT
 
 
 @dataclass
 class PackageSelection:
     package_list: list
     package_to_install = []
+    manager: ptg.WindowManager = None
 
     def submit(self, button: ptg.Button) -> None:
-        if button.label == "all":
+        if button.label == "install all":
             self.package_to_install = self.package_list
-        elif button.label == "install":
-            print(self.package_to_install)
+        elif button.label == "install selected":
+            self.manager.stop()
         else:
+            button.styles._current = SUCCESS_LABEL
             self.package_to_install.append(button.label)
 
-    def render(self) -> None:
-        package_list_buttons = [
-            ptg.Button(label=package, onclick=self.submit)
-            for package in self.package_list
-        ]
-        # Package selection using a simple checkbox for each of them
-        # that are available in the conf.yml file
+    def render(self) -> list:
         with ptg.WindowManager() as manager:
+            self.manager = manager
+            install_selected = ptg.Button("install selected", onclick=self.submit)
+            install_all = ptg.Button("install all", onclick=self.submit)
             window = (
                 ptg.Window(
                     "",
@@ -85,11 +88,13 @@ class PackageSelection:
                         "[bold] Package installation [/bold]",
                     ),
                     "",
-                    *package_list_buttons,
+                    *[
+                        ptg.Button(package, onclick=self.submit)
+                        for package in self.package_list
+                    ],
                     "",
-                    ptg.Button("all", onclick=self.submit),
-                    "",
-                    ptg.Button("install", onclick=self.submit),
+                    install_selected,
+                    install_all,
                     "",
                     width=60,
                     box="DOUBLE",
@@ -98,6 +103,7 @@ class PackageSelection:
                 .center()
             )
             manager.add(window)
+        return list(set(self.package_to_install))
 
 
 class InstallingLoop(Container):
@@ -105,15 +111,15 @@ class InstallingLoop(Container):
         super().__init__(**attrs)
         self.timeout = timeout
         self.package_list = package_list
-        Thread(target=self._monitor_loop, daemon=True).start()
+        self.thread = Thread(target=self._monitor_loop, daemon=True)
+        self.thread.start()
 
     def _monitor_loop(self) -> None:
         self.update_content()
-        sleep(self.timeout)
 
     def update_content(self) -> None:
         for package in self.package_list:
-            widget = ptg.Label(f"{GRADIENT_GREEN} [bold] {package} [/bold]")
+            widget = ptg.Label(f"[bold] {package} [/bold]")
             self._add_widget(widget)
             time.sleep(self.timeout)
 
@@ -121,19 +127,30 @@ class InstallingLoop(Container):
 @dataclass
 class InstallPackages:
     package_list: list
-    # render the installation of packages with
-    # an animation using the window manager and the animation class
+    """
+    Render the installation of packages with
+    an animation using the window manager and the animation class
+    """
+    manager = None
+
+    def finish(self, button: ptg.Button):
+        self.manager.toast("[bold] Installation completed [/bold]")
+        sleep(2)
+        self.manager.stop()
+
     def render(self):
         with ptg.WindowManager() as manager:
+            self.manager = manager
             window = (
                 ptg.Window(
                     "",
                     ptg.Label(
-                        "[!gradient(105)] [bold] Installing.. [/bold]",
+                        "[bold] Installing.. [/bold]",
                     ),
                     "",
-                    InstallingLoop(self.package_list, 0.2),
+                    InstallingLoop(self.package_list, 0.5),
                     "",
+                    ptg.Button("Finish", onclick=self.finish),
                     width=60,
                     box="ROUNDED",
                     height=20,
@@ -145,15 +162,17 @@ class InstallPackages:
             manager.add(window)
 
 
+@dataclass
 class GoodByeScreen:
-    @staticmethod
-    def render():
+    installed_dir: str
+
+    def render(self):
         with ptg.WindowManager() as manager:
             window = (
                 ptg.Window(
                     "",
                     ptg.Label(
-                        "[bold] Package installed at $HOME/pepo [/bold]",
+                        f"[bold] Package installed at {self.installed_dir} [/bold]",
                     ),
                     "",
                     "",

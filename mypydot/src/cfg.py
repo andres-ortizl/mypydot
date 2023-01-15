@@ -7,21 +7,19 @@ from dataclasses import dataclass
 
 @dataclass
 class Cfg:
-    _default_conf_name: str = '.conf.yml'
+    cfg_path: str
 
     def __post_init__(self):
-        self._data = self.__load_cfg()
-        self.symlinks = self._data
+        self.data = self.__load_cfg()
 
-    def __load_cfg(self):
-        cfg_path = join(getenv('MYPYDOTFILES'), self._default_conf_name)
+    def __load_cfg(self) -> dict:
         try:
-            with open(cfg_path, 'r') as f:
+            with open(self.cfg_path, "r") as f:
                 data = yaml.full_load(f)
             res = self._parse_env_vars(data)
             return res
         except FileNotFoundError:
-            logging.error(f'Configuration file not found in {cfg_path}')
+            logging.error(f"Configuration file not found in {self.cfg_path=}")
             exit(1)
 
     @staticmethod
@@ -29,17 +27,17 @@ class Cfg:
         res = {}
 
         def parse_env(path):
-            if path.startswith('$'):
+            if path.startswith("$"):
                 return getenv(path[1:])
-            if path == '~':
-                return getenv('HOME')
+            if path == "~":
+                return getenv("HOME")
             return path
 
-        for k, v in d['symlinks'].items():
+        for k, v in d["symlinks"].items():
             res[k] = {}
             for s, s_value in v.items():
-                path_list = list(map(parse_env, s.split('/')))
-                s_value_list = list(map(parse_env, s_value.split('/')))
+                path_list = list(map(parse_env, s.split("/")))
+                s_value_list = list(map(parse_env, s_value.split("/")))
                 p = join(sep, *path_list)
                 s_v = join(sep, *s_value_list)
                 res[k][p] = s_v

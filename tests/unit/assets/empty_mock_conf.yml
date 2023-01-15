@@ -1,0 +1,3 @@
+symlinks:
+  fake:
+    ~/.2424.txt: $MYPYDOTFILES/config/2424.txt

@@ -23,8 +23,7 @@ PHONY: run-tests
 run-tests: build
 	@docker run  \
 		--name=$(PROJECT_NAME) \
-		-v ${LOCAL_ETL_DIR}:/opt/app/ \
-		--rm $(DOCKER_IMAGE):$(DOCKER_TAG) poetry run pytest --cov="mypydot" -v tests/ --cov-report=xml --cov-report=html
+		--rm $(DOCKER_IMAGE):$(DOCKER_TAG) poetry run pytest -s --cov="mypydot" -v tests/ --cov-report=xml --cov-report=html
 
 
 PHONY: run-lint
@@ -32,3 +31,6 @@ run-lint : build
 	@docker run  -t \
 		--name=$(PROJECT_NAME) \
 		--rm $(DOCKER_IMAGE):$(DOCKER_TAG) poetry run flake8
+
+tests: run-tests ## Run tests
+	poetry run pytest  -s -v --cov="mypydot" tests/ --cov-report=xml --cov-report=html
